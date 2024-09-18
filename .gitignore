@@ -2,6 +2,9 @@
 *.exe
 *.cpp__tests
 
+### VSC ###
+.vscode/
+
 ### C++ ###
 # Prerequisites
 *.d
