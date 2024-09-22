@@ -15,7 +15,7 @@ void solve() {
         a[i] = s[i] - '0';
     for (int i = n; i >= 1; i--)
         a[i] ^= a[i - 1];
-    std::cout << std::max(0, std::accumulate(a + 1, a + n + 1, -1)) << "\n";
+    std::cout << std::max(0, std::accumulate(a, a + n, -1)) << "\n";
 }
 
 int main() {
