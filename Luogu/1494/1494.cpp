@@ -37,12 +37,12 @@ int main() {
     unt = std::sqrt(n);
     for (int i = 1; i <= n; i++)
         std::cin >> c[i];
-    for (int i = 0; i < m; i++) {
+    for (int i = 1; i <= m; i++) {
         std::cin >> a[i].l >> a[i].r;
         a[i].id = i;
     }
-    std::sort(a, a + m);
-    for (int i = 0, l = 1, r = 0; i < m; i++) {
+    std::sort(a + 1, a + m + 1);
+    for (int i = 1, l = 1, r = 0; i <= m; i++) {
         if (a[i].l == a[i].r) {
             ans1[a[i].id] = 0;
             ans2[a[i].id] = 1;
@@ -55,7 +55,7 @@ int main() {
         ans1[a[i].id] = sum;
         ans2[a[i].id] = 1ll * (r - l + 1) * (r - l) >> 1;
     }
-    for (int i = 0; i < m; i++) {
+    for (int i = 1; i <= m; i++) {
         if (ans1[i] != 0) {
             i64 _g = std::__gcd(ans1[i], ans2[i]);
             ans1[i] /= _g;
