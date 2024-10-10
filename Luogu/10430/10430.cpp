@@ -13,12 +13,24 @@ bool flg[N];
 
 std::vector<std::pair<int, int>> e[N];
 
-struct node {
-    i64 val, lzy;
-};
+template <typename T> T read() {
+	T sum = 0, fl = 1;
+	int ch = getchar();
+	for (; !isdigit(ch); ch = getchar()) { if (ch == '-') fl = -1; }
+	for (; isdigit(ch); ch = getchar()) sum = sum * 10 + ch - '0';
+	return sum * fl;
+}
 
-struct SegTree {
-    node tr[N << 2];
+template <typename T> void write(T x) {
+	if (x < 0) { x = -x; putchar('-'); }
+	if (x > 9) write(x / 10);
+	putchar(x % 10 + '0');
+}
+
+namespace SegTree {
+    struct node {
+        i64 val, lzy;
+    } tr[N << 2];
 
     #define ls(o) (o << 1)
     #define rs(o) (o << 1 | 1)
@@ -68,16 +80,15 @@ struct SegTree {
             return query2(o << 1, l, mid, v);
         return query2(o << 1 | 1, mid + 1, r, v);
     }
-} seg;
+};
 
 int main() {
-    scanf("%d %lld", &n, &d);
+    n = read<int>(), d = read<i64>();
     for (int i = 1; i <= n; i++)
-        scanf("%lld", &a[i]);
-    scanf("%d", &Q);
+        a[i] = read<i64>();
+    Q = read<int>();
     for (int i = 1; i <= Q; i++) {
-        int l, r;
-        scanf("%d %d", &l, &r);
+        int l = read<int>(), r = read<int>();
         e[r].push_back({l, i});
     }
     for (int i = 1; i <= n; i++) {
@@ -92,22 +103,24 @@ int main() {
         i64 x = b[i];
         while (tot && ind[tot] + flg[r[tot] + 1] >= x) {
             i64 ls = ind[tot] + flg[r[tot] + 1] - x;
-            seg.update(1, 1, n, l[tot], r[tot], -ls);
+            SegTree::update(1, 1, n, l[tot], r[tot], -ls);
             x -= s[r[tot] + 1] - s[l[tot]];
             tot--;
         }
         ind[++tot] = b[i];
         l[tot] = r[tot - 1] + 1;
         r[tot] = i;
-        seg.update(1, 1, n, i, i, b[i]);
+        SegTree::update(1, 1, n, i, i, b[i]);
         for (auto j : e[i]) {
-            if (seg.query2(1, 1, n, j.first) < 0)
+            if (SegTree::query2(1, 1, n, j.first) < 0)
                 ans[j.second] = -1;
             else
-                ans[j.second] = _s[i] - _s[j.first - 1] - seg.query1(1, 1, n, j.first, i);
+                ans[j.second] = _s[i] - _s[j.first - 1] - SegTree::query1(1, 1, n, j.first, i);
         }
     }
-    for (int i = 1; i <= Q; i++)
-        printf("%lld\n", ans[i]);
+    for (int i = 1; i <= Q; i++) {
+        write<i64>(ans[i]);
+        puts("");
+    }
     return 0;
 }
