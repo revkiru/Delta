@@ -4,20 +4,14 @@ using i64 = long long;
 
 constexpr int N = 1e6 + 7;
 
-int n, m;
-int j, nex[N];
-std::string a, b;
+int n, m, j;
+int nex[N];
+char a[N], b[N];
 
 int main() {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-
-    std::cin >> a >> b;
-
-    n = a.size();
-    a = '$' + a;
-    m = b.size();
-    b = '$' + b;
+    scanf(" %s %s", a + 1, b + 1);
+    n = strlen(a + 1);
+    m = strlen(b + 1);
 
     for (int i = 2; i <= m; i++) {
         while (j && (b[i] != b[j + 1]))
@@ -34,13 +28,13 @@ int main() {
         if (b[j + 1] == a[i])
             j++;
         if (j == m) {
-            std::cout << i - m + 1 << "\n";
+            std::cout << (i - m + 1) << "\n";
             j = nex[j];
         }
     }
-
+    
     for (int i = 1; i <= m; i++)
-        std::cout << nex[i] << " ";
-    std::cout << "\n";
+        printf("%d ", nex[i]);
+    printf("\n");
     return 0;
 }
