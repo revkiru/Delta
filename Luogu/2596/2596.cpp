@@ -120,7 +120,7 @@ int main() {
 				u = trp.orkey(pos[x]);
 				trp.split(trp.rt, u - 1, w, v);
 				trp.split(v, 1, t, z);
-				if (y == 1) {
+				if (y == -1) {
 					trp.split(w, u - 2, i1, i2);
 					trp.rt = trp.merge(trp.merge(trp.merge(i1, t), i2), z);
 				} else {
