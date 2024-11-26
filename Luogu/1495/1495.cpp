@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 
-using i64 = long long;
+#define int __int128
+
+constexpr int N = 1e5 + 7;
 
 // #define DEBUG 1  // 调试开关
 struct IO {
@@ -88,18 +90,34 @@ struct IO {
     }
 } io;
 
-int main() {
-	std::ios::sync_with_stdio(false);
-	std::cin.tie(nullptr);
+int n;
+int a[N], b[N];
 
-	int n;
-	io.read(n);
-	i64 sum = 0;
-	while (n--) {
-		int x;
-		io.read(x);
-		sum += x;
+template <typename T>
+void exgcd(T a, T b, T &x, T &y) {
+	if (b == 0) { x = 1, y = 0; return; }
+	exgcd(b, a % b, y, x);
+	y -= a / b * x;
+}
+
+int CRT(int k, int *a, int *m) {
+	int n = 1, ans = 0;
+	for (int i = 1; i <= k; i++) {
+		n = n * m[i];
 	}
-	io.write(sum, '\n');
+	for (int i = 1; i <= k; i++) {
+		int p = n / m[i], b, y;
+		exgcd(p, m[i], b, y);
+		ans = (ans + a[i] * p * b % n) % n;
+	}
+	return (ans % n + n) % n;
+}
+
+signed main() {
+	io.read(n);
+	for (int i = 1; i <= n; i++) {
+		io.read(a[i]), io.read(b[i]);
+	}
+	io.write(CRT(n, b, a), '\n');
 	return 0;
 }

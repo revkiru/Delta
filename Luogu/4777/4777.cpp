@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 
-using i64 = long long;
+#define int __int128
+
+constexpr int N = 1e5 + 7;
 
 // #define DEBUG 1  // 调试开关
 struct IO {
@@ -88,18 +90,39 @@ struct IO {
     }
 } io;
 
-int main() {
-	std::ios::sync_with_stdio(false);
-	std::cin.tie(nullptr);
+int n, x, y, d;
+int a, b, A, B;
 
-	int n;
+template <typename T>
+void exgcd(T a, T b, T &x, T &y) {
+	if (b == 0) { d = a; x = 1; y = 0; return; }
+	exgcd(b, a % b, y, x);
+	y -= a / b * x;
+}
+
+template <typename T>
+T mylcm(T a, T b) { return a / std::__gcd(a, b) * b; }
+
+void merge() {
+	exgcd(a, A, x, y);
+	int c = B - b;
+	// std::cerr << x << ", " << y << ", " << d << "\n";
+	if (c % d) { std::cout << "-1\n"; exit(0); }
+	x = x * c / d % (A / d);
+	if (x < 0) { x += A / d; }
+	int mod = mylcm(a, A);
+	b = (a * x + b) % mod;
+	if (b < 0) { b += mod; }
+	a = mod;
+}
+
+signed main() {
 	io.read(n);
-	i64 sum = 0;
-	while (n--) {
-		int x;
-		io.read(x);
-		sum += x;
+	io.read(a), io.read(b);
+	for (int i = 2; i <= n; i++) {
+		io.read(A), io.read(B);
+		merge();
 	}
-	io.write(sum, '\n');
+	io.write((b % a), '\n');
 	return 0;
 }
