@@ -17,7 +17,7 @@ struct node {
 
 struct Treap {
 	int tim;
-	node tr[N * 40];
+	node tr[N << 8];
 
 	#define ls(o) (tr[o].ls)
 	#define rs(o) (tr[o].rs)
