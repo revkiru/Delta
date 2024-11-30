@@ -1,5 +1,6 @@
 ### OI ###
 *.exe
+*.elf
 *.cpp__tests
 
 ### VSC ###
