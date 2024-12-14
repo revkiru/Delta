@@ -50,11 +50,7 @@ void CDQ(int l, int r) {
             bit.add(a[j].del, 1);
             j++;
         }
-<<<<<<< HEAD
         a[i].ans += bit.query(m + 1) - bit.query(a[i].del);
-=======
-        a[i].ans = bit.query(m + 1) - bit.query(a[i].del);
->>>>>>> 57b6b9c0ce29f30ce742384027edfc4529ed7988
         i++;
     }
     i = l + 1, j = mid + 1;
@@ -72,11 +68,7 @@ void CDQ(int l, int r) {
             bit.add(a[i].del, 1);
             i--;
         }
-<<<<<<< HEAD
         a[j].ans += bit.query(m + 1) - bit.query(a[j].del);
-=======
-        a[j].ans = bit.query(m + 1) - bit.query(a[j].del);
->>>>>>> 57b6b9c0ce29f30ce742384027edfc4529ed7988
         j--;
     }
     i = mid, j = r;
