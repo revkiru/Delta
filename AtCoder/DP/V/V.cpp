@@ -20,7 +20,7 @@ void dfs1(int u, int fa) {
 		suf[u].push_back(f[v] + 1);
 	}
 
-	for (int i = 0; i < pre[u].size(); i++)
+	for (int i = 1; i < pre[u].size(); i++)
 		pre[u][i] = pre[u][i] * pre[u][i - 1] % m;
 	for (int i = suf[u].size() - 2; i >= 0; i--)
 		suf[u][i] = suf[u][i] * suf[u][i + 1] % m;
