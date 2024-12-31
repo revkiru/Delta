@@ -13,23 +13,23 @@ struct node {
 };
 
 struct PersistentSegTree {
-    int t0t, rt[N];
+    int rcnt, rt[N];
     node tr[N << 5];
 
     #define ls(o) (tr[o].ls)
     #define rs(o) (tr[o].rs)
 
     int build(int l, int r) {
-        int o = ++t0t;
-        if (l == r) return t0t;
+        int o = ++rcnt;
+        if (l == r) return rcnt;
         int mid = (l + r) >> 1;
         ls(o) = build(l, mid);
         rs(o) = build(mid + 1, r);
-        return t0t;
+        return rcnt;
     }
 
     int update(int o, int l, int r, int k) {
-        int dir = ++t0t;
+        int dir = ++rcnt;
         ls(dir) = ls(o), rs(dir) = rs(o), tr[dir].sum = tr[o].sum + 1;
         if (l == r) return dir;
         int mid = (l + r) >> 1;
@@ -55,9 +55,12 @@ int GetId(const int &x) {
 }
 
 int main() {
-    scanf("%d %d", &n, &m);
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+
+    std::cin >> n >> m;
     for (int i = 1; i <= n; i++) {
-        scanf("%d", &a[i]);
+        std::cin >> a[i];
         lsh[i] = a[i];
     }
     std::sort(lsh + 1, lsh + n + 1);
@@ -67,8 +70,8 @@ int main() {
         pSeg.rt[i] = pSeg.update(pSeg.rt[i - 1], 1, len, GetId(a[i]));
 
     for (int i = 1, l, r, k; i <= m; i++) {
-        scanf("%d %d %d", &l, &r, &k);
-        printf("%d\n", lsh[pSeg.query(1, len, pSeg.rt[l - 1], pSeg.rt[r], k)]);
+        std::cin >> l >> r >> k;
+        std::cout << lsh[pSeg.query(1, len, pSeg.rt[l - 1], pSeg.rt[r], k)] << "\n";
     }
     return 0;
 }
